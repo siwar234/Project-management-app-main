@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: siwarenf/projectmanagemntapp-frontend:latest
+    ports:
+      - "3000:80"
+    networks:
+      - my-network
+
+  backend:
+    image: siwarenf/projectmanagemntapp:latest
+    ports:
+      - "8000:8000"
+    networks:
+      - my-network
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/projectmanagement
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    networks:
+      - my-network
+
+  mongo-test:
+    image: mongo:latest
+    ports:
+      - "27019:27017"
+    networks:
+      - my-network
+    environment:
+      - URL_TEST=projectmanagement_test  # Optional: to initialize a specific database for testing
+
+networks:
+  my-network:
+    driver: bridge
