@@ -16,6 +16,8 @@ services:
       - my-network
     environment:
       - MONGO_URL=mongodb://mongo:27017/projectmanagement
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:latest
