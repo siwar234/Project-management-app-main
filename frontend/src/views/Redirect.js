@@ -17,7 +17,7 @@ export default function Redirect() {
             // Get userid from URL params
             const userId = params.get('id');
             // Redirect to profile page with token and userid
-            window.location.href = `http:172.10.0.140:3000/profileuser/${token}/${userId}`;
+            window.location.href = `http://172.10.0.140:3000/profileuser/${token}/${userId}`;
           }
         };
     

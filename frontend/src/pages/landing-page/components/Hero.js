@@ -12,7 +12,7 @@ import { useInView } from "react-intersection-observer";
 export default function Hero() {
   const [ref, inView] = useInView();
   const handleNavigation = () => {
-    window.location.href = 'http:172.10.0.140:3000/authentificate/login'; 
+    window.location.href = 'http://172.10.0.140:3000/authentificate/login'; 
   };
 
   return (

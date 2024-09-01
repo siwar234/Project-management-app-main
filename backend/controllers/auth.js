@@ -41,7 +41,7 @@ exports.Register = async (req, res, next) => {
     };
 
     const token = createActivationToken(user);
-    const resetUrl = `http:172.10.0.140:3000/email/activate?token=${token}`;
+    const resetUrl = `http://172.10.0.140::3000/email/activate?token=${token}`;
     
     const message = `<div style="max-width: 700px; margin:auto; padding: 50px 20px; font-size: 110%;">
       <!-- Image below the main content -->
