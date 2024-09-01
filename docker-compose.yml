@@ -31,7 +31,7 @@ services:
     networks:
       - my-network
     environment:
-      - URL_TEST=projectmanagement_test  # Optional: to initialize a specific database for testing
+      - URL_TEST=mongodb://localhost:27017/testdb  # Optional: to initialize a specific database for testing
 
 networks:
   my-network:
