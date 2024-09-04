@@ -5,7 +5,7 @@ FROM node:16
 WORKDIR /usr/src/app
 
 # Set the MongoDB URL environment variable
-ENV MONGODB_URL mongodb://mongodb-container:27017/projectmanagement
+ENV MONGODB_URL mongodb://mongodb-container:27018/projectmanagement
 
 
 # Copy package.json and package-lock.json
