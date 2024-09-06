@@ -21,7 +21,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the built React app from the build stage
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
+COPY build /usr/share/nginx/html
 
 # Expose the port on which nginx will run
 EXPOSE 3000
