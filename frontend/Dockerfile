@@ -1,32 +1,24 @@
-# Use an official Node.js runtime as a parent image for the build stage
-FROM node:16-alpine AS build
+# Step 1: Build the React app
+FROM node:16 as build
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
-
-# Copy only package.json and package-lock.json first to leverage Docker cache for npm install
+WORKDIR /app
 COPY package*.json ./
-
-# Install dependencies
-RUN npm install --legacy-peer-deps
-
-# Copy the rest of the application code
+RUN npm install
 COPY . .
-
-# Build the React app
 RUN npm run build
 
-# Use a lightweight Nginx image to serve the built app
+# Step 2: Use Nginx to serve the build
 FROM nginx:alpine
 
-# Remove default nginx website
-RUN rm -rf /usr/share/nginx/html/*
+# Remove the default Nginx configuration
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Copy the built React app from the build stage to Nginx's default directory
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
+# Copy the custom Nginx configuration file
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80 for HTTP traffic (Nginx default)
+# Copy the build output to the appropriate directory
+COPY --from=build /app/build /usr/share/nginx/html
+
 EXPOSE 80
 
-# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
