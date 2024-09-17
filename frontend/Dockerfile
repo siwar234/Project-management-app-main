@@ -1,13 +1,30 @@
-# Step 1: Build the React app
-FROM node:16 as build
+# Use an official Node.js runtime as a parent image for the build stage
+FROM node:16 AS build
 
-WORKDIR /app
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json to leverage Docker cache
 COPY package*.json ./
+
+
+# Install dependencies with legacy peer dependencies flag
 RUN npm install --legacy-peer-deps
 
-  # Copy the rest of the application code
-    COPY . .
-    
+# Copy the rest of the application code
+COPY . .
+
+# Build the React app for production
+RUN npm run build
+
+# Use a lightweight web server image to serve the built app
+FROM nginx:alpine
+
+# Copy the built React app from the build stage to the Nginx web server directory
+COPY --from=build /usr/src/app/build /usr/share/nginx/html
+
+# Expose port 80 to the outside world
 EXPOSE 80
 
+# Start Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
