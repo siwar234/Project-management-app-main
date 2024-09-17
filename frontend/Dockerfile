@@ -7,7 +7,6 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json to leverage Docker cache
 COPY package*.json ./
 
-
 # Install dependencies with legacy peer dependencies flag
 RUN npm install --legacy-peer-deps
 
